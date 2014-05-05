@@ -1,0 +1,16 @@
+- name: mjpg-stream setup
+  hosts:
+  - pogoplug2b
+  - pogoplug2a
+  gather_facts: false
+  sudo: true
+  tasks:
+  - pacman: name=mjpg-streamer state=installed
+  
+  - template: src=templates/etc_systemd_system_mjpgstream.service dest=/etc/systemd/system/mjpgstream.service owner=root group=root
+
+  - file: path=/usr/local/appscript owner=root group=root state=directory
+
+  - template: src=templates/usr_local_appscript_mjpg.sh dest=/usr/local/appscript/mjpg.sh owner=root group=root mode=0755
+  
+  - command: systemctl enable mjpgstream

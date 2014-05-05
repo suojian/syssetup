@@ -1,0 +1,21 @@
+# update archlinux,install sudo package, install jsuo user
+# ansible-playbook -i ../hosts archlinux_bootstrap.yml -c paramiko -k --limit pogoplug2b
+- name: archlinux bootstrap
+  hosts:
+  - pogoplug2b
+  - pogoplug2a
+  user: root
+  gather_facts: false
+  sudo: false
+  tasks:
+  - pacman: name=sudo state=installed
+
+  - group: name=sudo gid=27 state=present
+
+  - user: name=jsuo uid=2521 groups=sudo shell=/bin/bash createhome=yes state=present
+
+  - template: src=templates/etc_sudoers dest=/etc/sudoers owner=root group=root mode=0440
+
+  - authorized_key: user=jsuo state=present key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPGLyLLAYokLFUIh91TupLOgUsE13B5RO9FiaOOS/rO+nm6/9sLRBrxonz1ps9ip5ZdO68q2RyWv9REYiE6qJ4ObrHkXECiWlUlzAdNNnxfjk8pq9uQPmED1w5T5rnw1cAS06p0cZZoFdkLvTngA99HfiiNTCxmqmh4Zx+lz39hoshLpt/7RltRTpI0hIL2uQ5kGg/5TSZXKwoyEmyZuVVDAXDSwtr9uutZwR1m4h90o0wNJTrje0elDaj33stjO/AzZ7UKFmQRhB+TBVSlSPTWhiow3MEY/2um9ZeKUG0emwhP+JTbSg6a9NvVPxPZQQhICHtHhoUvTXDiDIeRxRj"
+
+  #- service: name=sshd state=reloaded 

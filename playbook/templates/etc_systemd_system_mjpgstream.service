@@ -1,0 +1,8 @@
+[Unit]
+Description=mjpg streamer
+
+[Service]
+ExecStart=/usr/local/appscript/mjpg.sh
+
+[Install]
+WantedBy=multi-user.target

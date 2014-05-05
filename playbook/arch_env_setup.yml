@@ -1,0 +1,10 @@
+- name: archlinux env setup
+  hosts:
+  - pogoplug2b
+  - pogoplug2a
+  gather_facts: false
+  sudo: true
+  tasks:
+  - file: path=/etc/localtime state=absent
+
+  - file: src=/usr/share/zoneinfo/Canada/Pacific dest=/etc/localtime owner=root group=root state=link
