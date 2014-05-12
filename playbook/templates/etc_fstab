@@ -1,0 +1,5 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+storage.home:/mnt/HD_a2 /mnt/storage nfs  users,auto,x-systemd.automount,x-systemd.device-timeout=10,rw,rsize=8192,wsize=8192,timeo=14,hard,intr,noatime,nolock 0 0

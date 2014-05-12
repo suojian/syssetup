@@ -1,0 +1,68 @@
+#http://archlinuxarm.org/forum/viewtopic.php?t=3343
+- name: mjpg-stream setup
+  hosts:
+  - pogoplug2a
+  gather_facts: false
+  sudo: true
+  tasks:
+  - command: pacman -U http://dl.dropboxusercontent.com/u/15043728/ArchLinuxArm/my.pogoplug.com/pogoplug-3.4.1-1-arm.pkg.tar.xz
+
+  - group: name=pogo gid=501 state=present
+    tags: conf
+
+  - user: name=pogo uid=501 groups=sudo,root,pogo shell=/bin/bash createhome=yes state=present
+    tags: conf  
+
+  - template: src=templates/etc_pogoplug.conf dest=/etc/pogoplug.conf
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare owner=root group=root state=directory recurse=yes
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/i7 state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/i5 state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/dell630 state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/mac state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/pictures state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/note2 state=absent
+    tags: conf
+
+  - file: path=/usr/local/pogoplugshare/video state=absent
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/i7 src=/mnt/storage/systembackup/i7 owner=root group=root state=link  
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/i5 src=/mnt/storage/systembackup/i5 owner=root group=root state=link
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/dell630 src=/mnt/storage/systembackup/dell630 owner=root group=root state=link
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/mac src=/mnt/storage/systembackup/mac owner=root group=root state=link
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/note2 src=/mnt/storage/systembackup/note2 owner=root group=root state=link
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/pictures src=/mnt/storage/pictures owner=root group=root state=link
+    tags: conf
+
+  - file: dest=/usr/local/pogoplugshare/video src=/mnt/storage/video owner=root group=root state=link
+    tags: conf
+
+  - file: path=/etc/rc.d/pogoplug mode=0755
+    tags: conf
+
+#  - command: /etc/rc.d/pogoplug restart
+#    tags: restart  

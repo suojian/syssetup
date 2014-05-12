@@ -8,3 +8,15 @@
   - file: path=/etc/localtime state=absent
 
   - file: src=/usr/share/zoneinfo/Canada/Pacific dest=/etc/localtime owner=root group=root state=link
+  
+  - file: path=/mnt/storage state=directory
+
+  - pacman: name=nfs-utils state=installed
+
+  - command: systemctl enable rpc-idmapd
+
+  - command: systemctl start rpc-idmapd
+
+  - template: src=templates/etc_fstab dest=/etc/fstab owner=root group=root
+
+  - command: mount -a

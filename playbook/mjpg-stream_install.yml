@@ -12,5 +12,5 @@
   - file: path=/usr/local/appscript owner=root group=root state=directory
 
   - template: src=templates/usr_local_appscript_mjpg.sh dest=/usr/local/appscript/mjpg.sh owner=root group=root mode=0755
-  
+
   - command: systemctl enable mjpgstream
